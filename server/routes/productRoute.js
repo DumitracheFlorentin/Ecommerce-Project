@@ -42,7 +42,7 @@ router.post("/register", async (req, res) => {
     newProduct
       .save()
       .then((newProduct) => {
-        res.status(200).json(newProduct);
+        res.status(200).json({ msg: "The product was added to the list!" });
       })
       .catch((err) => {
         res.json({ msg: err.message });
@@ -56,7 +56,7 @@ router.post("/register", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   try {
     const deletedProduct = await Product.deleteOne({ _id: req.params.id });
-    res.status(200).json(deletedProduct);
+    res.status(200).json({ msg: "The product was deleted!" });
   } catch (error) {
     res.json({ msg: error.message });
   }
@@ -86,6 +86,8 @@ router.patch("/update/:id", async (req, res) => {
         },
       }
     );
+
+    res.json({ msg: "The product was updated!" });
   } catch (error) {
     res.json({ msg: error.message });
   }

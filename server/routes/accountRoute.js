@@ -41,7 +41,7 @@ router.post("/register", async (req, res) => {
     newAccount
       .save()
       .then((newAccount) => {
-        res.status(200).json(newAccount);
+        res.status(200).json({ msg: "The account was created!" });
       })
       .catch((err) => {
         res.json(err.message);
@@ -55,7 +55,7 @@ router.post("/register", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   try {
     const deletedAccount = await Account.deleteOne({ _id: req.params.id });
-    res.status(200).json(deletedAccount);
+    res.status(200).json({ msg: "The account was deleted!" });
   } catch (error) {
     res.json(error.message);
   }
@@ -83,7 +83,7 @@ router.patch("/update/:id", async (req, res) => {
       }
     )
       .then(() => {
-        res.status(200).json({ msg: "Succes!" });
+        res.status(200).json({ msg: "The account was updated!" });
       })
       .catch((err) => {
         console.log(err);
