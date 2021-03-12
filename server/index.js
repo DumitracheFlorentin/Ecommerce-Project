@@ -14,6 +14,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/users", require("./routes/accountRoute"));
+app.use("/api/products", require("./routes/productRoute"));
 
 // DB Connection
 DBconnection();
