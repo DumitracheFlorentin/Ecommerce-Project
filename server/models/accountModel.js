@@ -26,7 +26,7 @@ const AccountSchema = mongoose.Schema({
     require: true,
     min: 3,
   },
-  Address: {
+  address: {
     type: String,
     require: true,
     min: 3,
@@ -37,7 +37,7 @@ const AccountSchema = mongoose.Schema({
     min: 8,
   },
   isAdmin: {
-    type: boolean,
+    type: Boolean,
     require: true,
     default: false,
   },
