@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 import allReducers from "./reducers/index.js";
 
 // Import bootstrap
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./bootstrap.min.css";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

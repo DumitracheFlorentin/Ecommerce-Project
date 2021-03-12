@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+  min-height: 400px;
+  height: 50vh;
+  object-fit: cover;
+}
+
+.productCard {
+  min-height: 80vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-row-gap: 2rem;
+  grid-column-gap: 2rem;
+}
+
+.firstInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 6vh;
+  min-height: 57px;
+}

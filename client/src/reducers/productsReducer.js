@@ -1,9 +1,11 @@
-import axios from "axios";
+const initState = [];
 
-const productsReducer = (state = [], action) => {
+const productsReducer = (state = initState, action) => {
   switch (action.type) {
-    case "FETCH_IN":
-
+    case "FETCH_PRODUCTS":
+      return {
+        data: action.payload.products,
+      };
     default:
       return state;
   }
