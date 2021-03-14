@@ -2,6 +2,7 @@ const express = require("express");
 const Account = require("../models/accountModel");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -79,6 +80,31 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     res.json(error.message);
   }
+});
+
+// LOGIN
+router.post("/login", async (req, res) => {
+  // Check if the account exists by email
+  const account = await Account.findOne({ email: req.body.email });
+
+  if (!account) {
+    return res.json({ msg: "The email is incorrect!" });
+  }
+
+  // Check if the password matches with the account's password
+  const unhashedPassword = await bcrypt.compare(
+    req.body.password,
+    account.password
+  );
+
+  if (!unhashedPassword) {
+    return res.json({ msg: "The password is incorrect!" });
+  }
+
+  // Create token
+  const token = jwt.sign({ id: account._id }, process.env.SECRET_KEY);
+
+  res.status(200).json({ auth: true, token: token, result: account });
 });
 
 // DELETE A SPECIFIC ACCOUNT

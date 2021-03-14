@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import axios from "axios";
+import { useRef, useState } from "react";
 
 // Import files
 import NavbarComponent from "./NavbarComponent";
@@ -7,8 +8,31 @@ import NavbarComponent from "./NavbarComponent";
 import { Container, Form, Button } from "react-bootstrap";
 
 const LoginComponent = () => {
+  const [msg, setMsg] = useState();
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const loginButtonHandler = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("http://localhost:5000/api/users/login", {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      })
+      .then((res) => {
+        if (res.data.msg) {
+          setMsg(res.data.msg);
+          console.log(res.data);
+        } else {
+          localStorage.setItem("token", res.data.token);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -33,7 +57,11 @@ const LoginComponent = () => {
               required
             />
           </Form.Group>
-          <Button variant="warning" className="loginFormButton">
+          <Button
+            variant="warning"
+            className="loginFormButton"
+            onClick={loginButtonHandler}
+          >
             Log in
           </Button>
         </Form>

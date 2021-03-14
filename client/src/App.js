@@ -9,6 +9,7 @@ import MainComponent from "./components/MainComponent";
 import RegisterComponent from "./components/RegisterComponent";
 import LoginComponent from "./components/LoginComponent";
 import ProductPageComponent from "./components/ProductPageComponent";
+import CartComponent from "./components/CartComponent";
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
         </Route>
 
         <Route path="/cart" exact>
-          <NavbarComponent />
+          <CartComponent />
         </Route>
 
         <Route path="/register" exact>
