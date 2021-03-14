@@ -7,6 +7,7 @@ import "./style/style.css";
 import NavbarComponent from "./components/NavbarComponent";
 import MainComponent from "./components/MainComponent";
 import RegisterComponent from "./components/RegisterComponent";
+import LoginComponent from "./components/LoginComponent";
 
 const App = () => {
   return (
@@ -24,6 +25,10 @@ const App = () => {
         <Route path="/register" exact>
           <NavbarComponent />
           <RegisterComponent />
+        </Route>
+
+        <Route path="/login" exact>
+          <LoginComponent />
         </Route>
       </Router>
     </div>
