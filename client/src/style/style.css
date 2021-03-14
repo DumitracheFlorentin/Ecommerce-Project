@@ -26,3 +26,35 @@ img {
   height: 6vh;
   min-height: 57px;
 }
+
+.preFormReg {
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formReg {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonsGroup {
+  margin-top: 2vh;
+  width: 100%;
+  text-align: center;
+}
+
+.regButton {
+  margin-right: 2vh;
+  height: 6vh;
+}
+
+.loginButton {
+  margin-right: 2vh;
+  height: 6vh;
+}

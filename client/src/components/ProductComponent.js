@@ -1,14 +1,25 @@
-import { Container } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ProductComponent = ({ product }) => {
   return (
-    <Container key={product._id}>
-      <img src={product.image} alt={product.name} />
-      <div className="firstInfo">
-        <h5>{product.name}</h5>
-        <h5>{product.price}$</h5>
-      </div>
-    </Container>
+    <>
+      <Card className="my-3 p-3 rounded">
+        <Link to={`/products/${product._id}`}>
+          <Card.Img src={product.image} variant="top" />
+        </Link>
+
+        <Card.Body>
+          <Link to={`/product/${product._id}`}>
+            <Card.Title as="div">
+              <strong>{product.name}</strong>
+            </Card.Title>
+          </Link>
+
+          <Card.Text as="h3">${product.price}</Card.Text>
+        </Card.Body>
+      </Card>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import "./style/style.css";
 // Import components
 import NavbarComponent from "./components/NavbarComponent";
 import MainComponent from "./components/MainComponent";
+import RegisterComponent from "./components/RegisterComponent";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
 
         <Route path="/register" exact>
           <NavbarComponent />
+          <RegisterComponent />
         </Route>
       </Router>
     </div>
