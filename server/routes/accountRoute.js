@@ -1,6 +1,7 @@
 const express = require("express");
 const Account = require("../models/accountModel");
 const Joi = require("joi");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -11,7 +12,6 @@ const schema = Joi.object({
   lastName: Joi.string().min(3).required(),
   address: Joi.string().min(3).required(),
   phone: Joi.string()
-    .length(12)
     .pattern(/^[0-9]+$/)
     .required(),
 });
@@ -52,10 +52,14 @@ router.post("/register", async (req, res) => {
     return res.json({ msg: "The email is already used!" });
   }
 
+  // Hashed Password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
   try {
     const info = req.body;
     const newAccount = new Account({
-      password: info.password,
+      password: hashedPassword,
       email: info.email,
       firstName: info.firstName,
       lastName: info.lastName,
