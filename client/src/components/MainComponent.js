@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productsAction } from "../actions/productsAction";
-import { Container } from "react-bootstrap";
+
+// Import files
+import ProductComponent from "./ProductComponent";
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -15,15 +17,7 @@ const MainComponent = () => {
     <div className="productCard mt-5">
       {products &&
         products.map((product) => {
-          return (
-            <Container key={product._id}>
-              <img src={product.image} alt={product.name} />
-              <div className="firstInfo">
-                <h5>{product.name}</h5>
-                <h5>{product.price}$</h5>
-              </div>
-            </Container>
-          );
+          return <ProductComponent product={product} />;
         })}
     </div>
   );
