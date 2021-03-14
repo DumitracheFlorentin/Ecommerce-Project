@@ -1,7 +1,20 @@
 const express = require("express");
 const Account = require("../models/accountModel");
+const Joi = require("joi");
 
 const router = express.Router();
+
+const schema = Joi.object({
+  email: Joi.string().email().min(6).required(),
+  password: Joi.string().min(6).required(),
+  firstName: Joi.string().min(3).required(),
+  lastName: Joi.string().min(3).required(),
+  address: Joi.string().min(3).required(),
+  phone: Joi.string()
+    .length(12)
+    .pattern(/^[0-9]+$/)
+    .required(),
+});
 
 // GET ALL USERS
 router.get("/", async (req, res) => {
@@ -25,10 +38,23 @@ router.get("/:id", async (req, res) => {
 
 // REGISTER AN ACCOUNT
 router.post("/register", async (req, res) => {
+  // Check for errors
+  const { error } = await schema.validate(req.body);
+
+  if (error) {
+    return res.json({ msg: error.details[0].message });
+  }
+
+  // Check for existings mail
+  const emailExists = await Account.findOne({ email: req.body.email });
+
+  if (emailExists) {
+    return res.json({ msg: "The email is already used!" });
+  }
+
   try {
     const info = req.body;
     const newAccount = new Account({
-      username: info.username,
       password: info.password,
       email: info.email,
       firstName: info.firstName,
@@ -71,7 +97,6 @@ router.patch("/update/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: {
-          username: info.username ? info.username : user.username,
           password: info.password ? info.password : user.password,
           email: info.email ? info.email : user.email,
           firstName: info.firstName ? info.firstName : user.firstName,

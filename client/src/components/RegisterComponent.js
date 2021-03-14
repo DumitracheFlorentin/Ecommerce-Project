@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useRef } from "react";
 
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { Container, Form, Button } from "react-bootstrap";
 
 const RegisterComponent = () => {
-  const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const firstnameRef = useRef();
@@ -18,7 +17,6 @@ const RegisterComponent = () => {
 
     axios
       .post("http://localhost:5000/api/users/register", {
-        username: usernameRef.current.value,
         password: passwordRef.current.value,
         email: emailRef.current.value,
         firstName: firstnameRef.current.value,
@@ -33,15 +31,6 @@ const RegisterComponent = () => {
   return (
     <Container className="preFormReg">
       <Form className="formReg">
-        <Form.Group controlId="formGroupUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            ref={usernameRef}
-            required
-          />
-        </Form.Group>
         <Form.Group controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -105,9 +94,11 @@ const RegisterComponent = () => {
           >
             Register
           </Button>
-          <Button variant="secondary" className="loginButton">
-            Log In
-          </Button>
+          <LinkContainer to="/login">
+            <Button variant="secondary" className="loginButton">
+              Sign In
+            </Button>
+          </LinkContainer>
         </div>
       </Form>
     </Container>
