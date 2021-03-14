@@ -65,3 +65,19 @@ img {
   margin-right: 2vh;
   height: 6vh;
 }
+
+.productView{
+  display: flex;
+  justify-content: space-between;
+  padding:3rem;
+}
+
+.productPhoto {
+  width: 55%;
+  
+}
+
+.productInfo{
+  width: 40%;
+}
+
