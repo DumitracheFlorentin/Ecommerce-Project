@@ -10,6 +10,7 @@ import RegisterComponent from "./components/RegisterComponent";
 import LoginComponent from "./components/LoginComponent";
 import ProductPageComponent from "./components/ProductPageComponent";
 import CartComponent from "./components/CartComponent";
+import AccountComponent from "./components/AccountComponent";
 
 const App = () => {
   return (
@@ -31,6 +32,10 @@ const App = () => {
 
         <Route path="/login" exact>
           <LoginComponent />
+        </Route>
+
+        <Route path="/account">
+          <AccountComponent />
         </Route>
 
         <Route path="/products/:id">
