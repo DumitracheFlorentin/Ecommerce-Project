@@ -12,6 +12,8 @@ import ProductPageComponent from "./components/ProductPageComponent";
 import CartComponent from "./components/CartComponent";
 import AccountComponent from "./components/AccountComponent";
 import DashboardComponent from "./components/DashboardComponent";
+import ProductsDashboardComponent from "./components/ProductsDashboardComponent";
+import UsersDashboardComponent from "./components/UsersDashboardComponent";
 
 const App = () => {
   return (
@@ -43,8 +45,16 @@ const App = () => {
           <ProductPageComponent />
         </Route>
 
-        <Route path="/dashboard">
+        <Route path="/dashboard" exact>
           <DashboardComponent />
+        </Route>
+
+        <Route path="/dashboard/products">
+          <ProductsDashboardComponent />
+        </Route>
+
+        <Route path="/dashboard/users">
+          <UsersDashboardComponent />
         </Route>
       </Router>
     </>
