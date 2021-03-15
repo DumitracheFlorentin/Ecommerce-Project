@@ -27,6 +27,29 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Middleware function
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+
+  if (!token) {
+    return res.json({ msg: "You need a token!" });
+  }
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    if (err) {
+      res.json({ auth: false, message: "U failed to auth!" });
+    } else {
+      req.userId = decoded;
+      next();
+    }
+  });
+};
+
+router.get("/valid", verifyJWT, async (req, res) => {
+  const userId = req.userId;
+  res.json({ id: userId.id });
+});
+
 // GET A SPECIFIC USER
 router.get("/:id", async (req, res) => {
   try {

@@ -17,7 +17,7 @@ const MainComponent = () => {
     <div className="productCard mt-5">
       {products &&
         products.map((product) => {
-          return <ProductComponent product={product} />;
+          return <ProductComponent product={product} key={product._id} />;
         })}
     </div>
   );

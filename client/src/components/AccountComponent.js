@@ -1,22 +1,42 @@
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 // Import files
 import NavbarComponent from "./NavbarComponent";
+import { specificAccount } from "../actions/specificAccountAction";
 
 // Import Bootstrap
 import { Container, Nav, Tab } from "react-bootstrap";
 
 const AccountComponent = () => {
   let history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
   const PROFILE = "profile";
   const ORDERS = "orders";
 
-  const logoutHandler = (e) => {
+  const logoutHandler = async (e) => {
     e.preventDefault();
-
     history.push("/");
     localStorage.removeItem("token");
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/users/valid", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        dispatch(specificAccount(res.data.id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [dispatch]);
 
   return (
     <>

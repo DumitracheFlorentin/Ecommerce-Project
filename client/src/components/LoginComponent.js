@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 // Import files
 import NavbarComponent from "./NavbarComponent";
@@ -30,7 +30,7 @@ const LoginComponent = () => {
           setMsg();
           localStorage.setItem("token", res.data.token);
           setSucc(true);
-          setTimeout(() => history.push("/"), 4000);
+          history.push("/");
         }
       })
       .catch((err) => {
@@ -43,23 +43,6 @@ const LoginComponent = () => {
       <NavbarComponent />
       <Container className="preFormLogin">
         {msg && <Alert variant="danger">{msg}</Alert>}
-        {succ && (
-          <Alert variant="dark">
-            <Alert.Heading>Hey, nice to have you back</Alert.Heading>
-            <p>
-              Aww yeah, you successfully log in to your account. Be careful,
-              dont share to anyone your contact details. Our STAFF will never
-              ask for your email or password details.
-            </p>
-            <hr />
-            <p className="mb-0">
-              Enjoy our website and hope you will find what you are searching!
-            </p>
-            <p className="mb-0">
-              You will be redirected to the login page in 4 seconds!
-            </p>
-          </Alert>
-        )}
         {!succ && (
           <Form className="formLogin">
             <Form.Group controlId="formGroupEmail">
