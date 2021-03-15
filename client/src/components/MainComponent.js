@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { productsAction } from "../actions/productsAction";
 
-// Import files
+// Import files & functions
+import { productsAction } from "../actions/productsAction";
 import ProductComponent from "./ProductComponent";
 
 const MainComponent = () => {
