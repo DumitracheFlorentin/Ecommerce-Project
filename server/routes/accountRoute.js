@@ -17,6 +17,16 @@ const schema = Joi.object({
     .required(),
 });
 
+// COUNT USERS
+router.get("/count", async (req, res) => {
+  try {
+    const countUsers = await Account.count();
+    res.status(200).json(countUsers);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 // GET ALL USERS
 router.get("/", async (req, res) => {
   try {
@@ -125,7 +135,10 @@ router.post("/login", async (req, res) => {
   }
 
   // Create token
-  const token = jwt.sign({ id: account._id }, process.env.SECRET_KEY);
+  const token = jwt.sign(
+    { id: account._id, isAdmin: account.isAdmin },
+    process.env.SECRET_KEY
+  );
 
   res.status(200).json({ auth: true, token: token, result: account });
 });

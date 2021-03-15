@@ -3,6 +3,16 @@ const Product = require("../models/productModel");
 
 const router = express.Router();
 
+// COUNT PRODUCTS
+router.get("/count", async (req, res) => {
+  try {
+    const countProducts = await Product.count();
+    res.status(200).json(countProducts);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 // GET ALL PRODUCTS
 router.get("/", async (req, res) => {
   try {
