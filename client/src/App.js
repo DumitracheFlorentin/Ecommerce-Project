@@ -11,10 +11,11 @@ import LoginComponent from "./components/LoginComponent";
 import ProductPageComponent from "./components/ProductPageComponent";
 import CartComponent from "./components/CartComponent";
 import AccountComponent from "./components/AccountComponent";
+import DashboardComponent from "./components/DashboardComponent";
 
 const App = () => {
   return (
-    <div className="App">
+    <>
       <Router>
         <Route path="/" exact>
           <NavbarComponent />
@@ -41,8 +42,12 @@ const App = () => {
         <Route path="/products/:id">
           <ProductPageComponent />
         </Route>
+
+        <Route path="/dashboard">
+          <DashboardComponent />
+        </Route>
       </Router>
-    </div>
+    </>
   );
 };
 
