@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, Modal } from "react-bootstrap";
 
 // Import files
 import AdminNavbarComponent from "./AdminNavbarComponent";
@@ -11,6 +11,7 @@ const DashboardComponent = () => {
   let history = useHistory();
   const [countUsers, setCountUsers] = useState(0);
   const [countProds, setCountProds] = useState(0);
+  const [info, setInfo] = useState();
 
   useEffect(() => {
     axios
@@ -22,6 +23,8 @@ const DashboardComponent = () => {
       .then((res) => {
         if (!res.data.isAdmin) {
           history.push("/");
+        } else {
+          setInfo("isAdmin");
         }
       })
       .catch((err) => {
@@ -50,26 +53,28 @@ const DashboardComponent = () => {
   return (
     <>
       <AdminNavbarComponent />
-      <Container className="dbCards">
-        <Card className="dbCard" style={{ width: "18rem" }}>
-          <Card.Body className="dbCardSettings">
-            <Card.Title>Number Of Users</Card.Title>
-            <Card.Text>{countUsers}</Card.Text>
-          </Card.Body>
-        </Card>
-        <Card className="dbCard" style={{ width: "18rem" }}>
-          <Card.Body className="dbCardSettings">
-            <Card.Title>Number Of Products</Card.Title>
-            <Card.Text>{countProds}</Card.Text>
-          </Card.Body>
-        </Card>
-        <Card className="dbCard" style={{ width: "18rem" }}>
-          <Card.Body className="dbCardSettings">
-            <Card.Title>Website Version</Card.Title>
-            <Card.Text>v1.0.0 Beta</Card.Text>
-          </Card.Body>
-        </Card>
-      </Container>
+      {info && (
+        <Container className="dbCards">
+          <Card className="dbCard" style={{ width: "18rem" }}>
+            <Card.Body className="dbCardSettings">
+              <Card.Title>Number Of Users</Card.Title>
+              <Card.Text>{countUsers}</Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="dbCard" style={{ width: "18rem" }}>
+            <Card.Body className="dbCardSettings">
+              <Card.Title>Number Of Products</Card.Title>
+              <Card.Text>{countProds}</Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="dbCard" style={{ width: "18rem" }}>
+            <Card.Body className="dbCardSettings">
+              <Card.Title>Website Version</Card.Title>
+              <Card.Text>v1.0.0 Beta</Card.Text>
+            </Card.Body>
+          </Card>
+        </Container>
+      )}
     </>
   );
 };
