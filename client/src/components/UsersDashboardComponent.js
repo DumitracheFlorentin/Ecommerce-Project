@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 // Import files & functions
 import AdminNavbarComponent from "./AdminNavbarComponent";
-import { productsAction } from "../actions/productsAction";
+import { usersAction } from "../actions/usersAction";
 
 const UsersDashboardComponent = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productsAction());
+    dispatch(usersAction());
   }, [dispatch]);
 
   return (

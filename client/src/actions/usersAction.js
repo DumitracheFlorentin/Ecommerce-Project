@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const usersAction = () => async (dispatch) => {
   // FETCH DATA
-  const allUsers = await axios.get("http://localhost:5000/");
+  const allUsers = await axios.get("http://localhost:5000/api/users");
 
   dispatch({
     type: "FETCH_USERS",
