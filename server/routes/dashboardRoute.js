@@ -20,8 +20,17 @@ const verifyJWT = (req, res, next) => {
   });
 };
 
-// Middleware function
 router.get("/", verifyJWT, (req, res) => {
+  const userInfo = req.userData;
+  res.json(userInfo);
+});
+
+router.get("/products", verifyJWT, (req, res) => {
+  const userInfo = req.userData;
+  res.json(userInfo);
+});
+
+router.get("/users", verifyJWT, (req, res) => {
   const userInfo = req.userData;
   res.json(userInfo);
 });

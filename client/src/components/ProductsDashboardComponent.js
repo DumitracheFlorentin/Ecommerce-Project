@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 // Import Bootstrap
@@ -10,15 +11,34 @@ import AdminNavbarComponent from "./AdminNavbarComponent";
 import { productsAction } from "../actions/productsAction";
 
 const ProductsDashboardComponent = () => {
+  let history = useHistory();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.data);
 
   const [show, setShow] = useState(false);
+  const [info, setInfo] = useState();
   const [part, setPart] = useState();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
+    axios
+      .get("http://localhost:5000/dashboard/products", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (!res.data.isAdmin) {
+          history.push("/");
+        } else {
+          setInfo("isAdmin");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     dispatch(productsAction());
   }, [dispatch]);
 
@@ -47,57 +67,59 @@ const ProductsDashboardComponent = () => {
   return (
     <>
       <AdminNavbarComponent />
-      <Container>
-        <div className="btnAddNewProduct">
-          <Button
-            variant="warning"
-            className="my-5"
-            onClick={CreateProductHandler}
-          >
-            Add New Product
-          </Button>
-        </div>
+      {info && (
+        <Container>
+          <div className="btnAddNewProduct">
+            <Button
+              variant="warning"
+              className="my-5"
+              onClick={CreateProductHandler}
+            >
+              Add New Product
+            </Button>
+          </div>
 
-        <Table className="tableProducts">
-          <thead>
-            <tr style={{ textAlign: "center" }}>
-              <th>Name</th>
-              <th>Brand</th>
-              <th>Price</th>
-              <th>Command</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products &&
-              products.map((product) => {
-                return (
-                  <tr style={{ textAlign: "center" }}>
-                    <td>{product.name}</td>
-                    <td>{product.brand}</td>
-                    <td>{product.price}$</td>
-                    <td>
-                      <div>
-                        <Button
-                          variant="primary"
-                          className="mr-3"
-                          onClick={EditProductHandler}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="danger"
-                          onClick={() => DeleteProdHandler(product._id)}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
-      </Container>
+          <Table className="tableProducts">
+            <thead>
+              <tr style={{ textAlign: "center" }}>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Command</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products &&
+                products.map((product) => {
+                  return (
+                    <tr key={product._id} style={{ textAlign: "center" }}>
+                      <td>{product.name}</td>
+                      <td>{product.brand}</td>
+                      <td>{product.price}$</td>
+                      <td>
+                        <div>
+                          <Button
+                            variant="primary"
+                            className="mr-3"
+                            onClick={EditProductHandler}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => DeleteProdHandler(product._id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </Container>
+      )}
 
       {part === "NewProduct" ? (
         <Modal show={show} onHide={handleClose}>

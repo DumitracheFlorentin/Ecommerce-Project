@@ -49,11 +49,11 @@ const App = () => {
           <DashboardComponent />
         </Route>
 
-        <Route path="/dashboard/products">
+        <Route path="/dashboard/products" exact>
           <ProductsDashboardComponent />
         </Route>
 
-        <Route path="/dashboard/users">
+        <Route path="/dashboard/users" exact>
           <UsersDashboardComponent />
         </Route>
       </Router>
