@@ -24,10 +24,6 @@ const App = () => {
           <MainComponent />
         </Route>
 
-        <Route path="/cart" exact>
-          <CartComponent />
-        </Route>
-
         <Route path="/register" exact>
           <NavbarComponent />
           <RegisterComponent />
@@ -55,6 +51,10 @@ const App = () => {
 
         <Route path="/dashboard/users" exact>
           <UsersDashboardComponent />
+        </Route>
+
+        <Route path="/cart/:id?">
+          <CartComponent />
         </Route>
       </Router>
     </>

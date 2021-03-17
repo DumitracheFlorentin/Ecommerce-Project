@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -11,16 +11,62 @@ import AdminNavbarComponent from "./AdminNavbarComponent";
 import { productsAction } from "../actions/productsAction";
 
 const ProductsDashboardComponent = () => {
-  let history = useHistory();
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.data);
-
+  // useState
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState();
   const [part, setPart] = useState();
+  const [id, setId] = useState();
+  const [checkAlert, setCheckAlert] = useState();
+
+  // useHistory
+  let history = useHistory();
+
+  // useRef
+  const brandRef = useRef();
+  const categoryRef = useRef();
+  const descriptionRef = useRef();
+  const imageRef = useRef();
+  const priceRef = useRef();
+  const nameRef = useRef();
+  const ratingRef = useRef();
+  const stockRef = useRef();
+
+  // Redux
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.data);
+
+  // Functions
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const MessageNewProductHandler = () => {
+    handleShow();
+    setPart("NewProduct");
+  };
+  const NewProductHandler = () => {};
 
+  const MessagePatchProductHandler = (id) => {
+    setPart("PatchProduct");
+    handleShow();
+    setId(id);
+  };
+  const PatchProductHandler = (id) => {};
+
+  const MessageDeleteProductHandler = (id) => {
+    setPart("DeleteProduct");
+    handleShow();
+    setId(id);
+  };
+  const DeleteProductHandler = (id) => {
+    axios
+      .delete(`http://localhost:5000/api/products/delete/${id}`)
+      .then((res) => {
+        res.data.msg === "The product was deleted!" && handleClose();
+        setCheckAlert(checkAlert + "deletedProduct");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // useEffect
   useEffect(() => {
     axios
       .get("http://localhost:5000/dashboard/products", {
@@ -42,28 +88,6 @@ const ProductsDashboardComponent = () => {
     dispatch(productsAction());
   }, [dispatch]);
 
-  const CreateProductHandler = () => {
-    setPart("NewProduct");
-    handleShow();
-  };
-
-  const EditProductHandler = () => {
-    setPart("EditProduct");
-    handleShow();
-  };
-
-  const DeleteMessageHandler = () => {
-    setPart("DeleteProduct");
-    handleShow();
-  };
-
-  const DeleteProdHandler = (id) => {
-    axios
-      .delete(`http://localhost:5000/api/products/delete/${id}`)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  };
-
   return (
     <>
       <AdminNavbarComponent />
@@ -73,7 +97,7 @@ const ProductsDashboardComponent = () => {
             <Button
               variant="warning"
               className="my-5"
-              onClick={CreateProductHandler}
+              onClick={MessageNewProductHandler}
             >
               Add New Product
             </Button>
@@ -101,13 +125,15 @@ const ProductsDashboardComponent = () => {
                           <Button
                             variant="primary"
                             className="mr-3"
-                            onClick={EditProductHandler}
+                            onClick={MessagePatchProductHandler}
                           >
                             Edit
                           </Button>
                           <Button
                             variant="danger"
-                            onClick={() => DeleteProdHandler(product._id)}
+                            onClick={() =>
+                              MessageDeleteProductHandler(product._id)
+                            }
                           >
                             Delete
                           </Button>
@@ -136,7 +162,7 @@ const ProductsDashboardComponent = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-      ) : part === "EditProduct" ? (
+      ) : part === "PatchProduct" ? (
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Product</Modal.Title>
@@ -161,10 +187,13 @@ const ProductsDashboardComponent = () => {
               Are you sure you want to delete this product?
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={DeleteMessageHandler}>
+              <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+              <Button
+                variant="primary"
+                onClick={() => DeleteProductHandler(id)}
+              >
                 Delete
               </Button>
             </Modal.Footer>

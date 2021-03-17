@@ -1,22 +1,31 @@
 // Import components
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useEffect, useImperativeHandle, useState } from "react";
 
 //Import Bootstrap
-import { Card, Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 
 // Import files & functions
 import { productAction } from "../actions/specificProductAction";
 import NavbarComponent from "./NavbarComponent";
 
-const ProductPageComponent = () => {
-  const [qty, setQty] = useState(0);
+const ProductPageComponent = ({ match }) => {
+  let history = useHistory();
+  const [qty, setQty] = useState(1);
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  // Redux
+  const isLogged = useSelector((state) => state.user.data);
   const product = useSelector((state) => state.product.data);
 
+  // Functions
+  const AddToCartHandler = () => {
+    history.push(`/cart/${id}?qty=${qty}`);
+  };
+
+  // useEffect
   useEffect(() => {
     dispatch(productAction(id));
   }, [dispatch]);
@@ -27,7 +36,7 @@ const ProductPageComponent = () => {
       {product && (
         <Container className="productView mt-4">
           <div className="productPhoto">
-            <img src={product.image} alt={product.name} />
+            <img src={product.image} alt={product.name} className="img" />
           </div>
           <div className="productInfo">
             <h3 className="mb-4">{product.name}</h3>
@@ -48,7 +57,7 @@ const ProductPageComponent = () => {
             <p className="mt-2">{product.description}</p>
 
             {product.stock > 0 ? (
-              <Button>Add to cart</Button>
+              <Button onClick={AddToCartHandler}>Add to cart</Button>
             ) : (
               <Button
                 className="disabled"

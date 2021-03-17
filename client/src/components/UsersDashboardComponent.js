@@ -152,7 +152,6 @@ const UsersDashboardComponent = () => {
             <tbody>
               {users &&
                 users.map((user) => {
-                  console.log(user);
                   return (
                     <tr style={{ textAlign: "center" }}>
                       <td>

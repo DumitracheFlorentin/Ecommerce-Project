@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-img {
+.img {
   width: 100%;
   min-height: 400px;
   height: 50vh;
@@ -66,41 +66,38 @@ img {
   height: 6vh;
 }
 
-.productView{
+.productView {
   display: flex;
   justify-content: space-between;
-  padding:3rem;
+  padding: 3rem;
 }
 
 .productPhoto {
   width: 55%;
-  
 }
 
-.productInfo{
+.productInfo {
   width: 40%;
 }
 
-.cards{
+.cards {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.dbCards{
- min-height: 450px;
+.dbCards {
+  min-height: 450px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  
 }
 
-.dbCard{
+.dbCard {
   height: 25vh;
   min-height: 200px;
   border-radius: 50px;
-  
 }
 
 .dbCardSettings {
@@ -111,10 +108,8 @@ img {
   text-align: center;
 }
 
-.btnAddNewProduct{
+.btnAddNewProduct {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
